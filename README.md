@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DocuMentor AI
 
-## Getting Started
+DocuMentor AI is a full-stack RAG-based study assistant that enables users to upload documents, organize classes, share study materials, and get AI-powered answers grounded in their PDFs.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+* User authentication (register & login)
+* Create and join classes
+* Post and share study materials
+* Upload and parse PDF documents
+* Chunk storage for efficient retrieval
+* AI-powered Q&A based on uploaded content
+* Timeline and PDF viewer interface
+
+---
+
+## 🛠 Tech Stack
+
+* **Frontend:** Next.js, React, Tailwind CSS
+* **Backend:** Next.js API Routes
+* **Database:** MongoDB (Mongoose)
+* **AI:** OpenAI API
+* **RAG Pipeline:** LangChain
+
+---
+
+## 📦 Installation & Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/Documentor-AI.git
+cd Documentor-AI
+```
+
+### 2. Install dependencies
+
+```bash
+npm install --legacy-peer-deps
+```
+
+### 3. Setup environment variables
+
+Create a `.env.local` file in the root directory and add:
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+MONGODB_URI=mongodb://localhost:27017/DocuMentor
+```
+
+---
+
+## ▶️ Running the Project
+
+Make sure MongoDB is running, then start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open in browser:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ⚙️ Requirements
 
-To learn more about Next.js, take a look at the following resources:
+* Node.js installed
+* MongoDB installed and running locally
+* OpenAI API key
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 Project Structure (Simplified)
 
-## Deploy on Vercel
+```
+app/              → Frontend pages & API routes  
+lib/              → Database, models, RAG logic  
+public/           → Static assets  
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔮 Future Improvements
+
+* Vector database integration (FAISS / Pinecone)
+* Improved retrieval accuracy and chunking
+* Streaming AI responses
+* Deployment (Vercel + MongoDB Atlas)
+
+---
+
+## 📄 License
+
+This project is for educational purposes.
