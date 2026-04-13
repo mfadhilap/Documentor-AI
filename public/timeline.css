@@ -1,0 +1,270 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'jost';
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    height: 60px;
+    box-sizing: border-box;
+    background-color: #01296F;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: sticky;
+}
+
+.list {
+    display: flex;
+    align-items: center;
+}
+
+.docu {
+    font-family: 'Jost', serif;
+    font-size: 28px;
+    font-weight: bolder;
+    color: white;
+    margin-left: 5px;
+}
+
+.mentor {
+    font-family: 'Jost', serif;
+    font-size: 28px;
+    font-weight: bolder;
+}
+
+.ai {
+    font-family: 'Jost', serif;
+    font-size: 28px;
+    color: white;
+}
+.prof {
+    display: flex;
+    align-items: center;
+}
+.mainblock{
+    display: flex;
+    width: 100vw;
+    position: relative;
+}
+.listup{
+    width: 483px;
+    height: calc(100vh - 60px);
+    background-color: #A2CAFF;
+    box-sizing: border-box;
+}
+
+.feed{
+    width: calc(100vw - 483px);
+    height:calc(100vh - 60px);
+}
+.post{
+    background-color: #01296F;
+    width: 183px;
+    height: 64px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Jost', serif;
+    color: white;
+    gap: 10px;
+    position: fixed;
+    bottom: 48.5px;
+    right: 63.5px;
+    /* top: -100px;
+    left: 762px; */
+    cursor: pointer;
+    border: 1px solid black;
+    box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    visibility: hidden;
+
+}
+.post div{
+    font-size: 24px;
+    font-weight: bold;
+    
+}
+.postbox{
+    position: absolute;
+    width: 718px;
+    height: 570px;
+    background-color: #01296F;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0px;
+    box-sizing: border-box;
+    gap: 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.723);
+    border: 1px solid rgba(128, 128, 128, 0.162);
+
+    
+}
+.caption {
+    width: 635px;
+    height: 181px;
+    padding: 5px; 
+    box-sizing: border-box;
+    white-space: pre-wrap; 
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+    line-height: 1.2; 
+    resize: none; 
+  }
+  
+ 
+  .caption::placeholder {
+    white-space: pre-wrap; 
+    word-wrap: break-word;
+    text-align: left; 
+  }
+  /* .addfile{
+    /* display: none; 
+    } */
+  .fileadd{
+    font-family: 'jost';
+    display: flex;
+    background-color: white;
+    width: 388px;
+    height: 45px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 15px;
+    border-radius: 18px;
+    padding-left: 143px;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  .sub{
+    width: 243px;
+    height: 91px;
+    background-color: #A2CAFF;
+    color: #01296F;
+    font-family: 'jost';
+    font-weight: bold;
+    font-size: 32px;
+    border-radius: 18px;
+  }
+  .poste{
+    display: none;
+  }
+  .card{
+    width: 437px;
+    height: 133px;
+    background-color: rgb(219, 219, 219);
+    border-radius: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    
+  }
+  .listup{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    padding: 24px 0px;
+  }
+  .tweets{
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 34px;
+    padding: 20px 63px;
+    box-sizing: border-box;
+    overflow-y:auto;
+    
+  }
+  .tweet{
+    width: 100%;
+    min-height: 133px;
+    background-color: rgb(253, 240, 255);
+    border-radius: 18px;
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+    white-space: normal; 
+    padding: 10px;
+    padding-bottom: 18px;
+    border: 1px solid rgba(128, 128, 128, 0.162);
+  }
+  .header{
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    gap: 10px;
+    align-items: center;
+    padding: 0px 5px;
+    padding-bottom: 10px;
+  
+  }
+  .line{
+    background-color: rgba(157, 157, 157, 0.558);
+    height: 2px;
+    width: 100%;
+  } 
+  .content{
+    padding: 10px;
+  }
+  .media{
+    background-color: red;
+    padding: 5px 15px;
+    border-radius: 18px;
+    height: 20px;
+    display: flex;
+  }
+  .media:hover{
+    cursor: pointer;
+    background-color: orangered;
+  }
+/* .feed{
+  
+} */
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.2s ease-in-out;
+  border: 1px solid rgba(128, 128, 128, 0.162);
+  position: relative;
+}
+.card:hover {
+  transform: translateY(-3px); 
+}
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+}
+p {
+  font-size: 16px;
+  color: #555;
+}
+.post:hover {
+  transform: scale(1.01); 
+}
+.detail{
+  display: flex;
+  justify-content: center;
+}
+.mediabox{
+  display: flex;
+  padding: 0 10px;
+}
+.creatorbox{
+  background-color: #01296F;
+  width: 40vw;
+  height: 30vh;
+  position: absolute;
+  top: 50px;
+}

@@ -1,0 +1,194 @@
+/* Add this at the top of your CSS to import the Jost font */
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 14px;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    height: 60px;
+    box-sizing: border-box;
+    background-color: #01296F;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.list {
+    display: flex;
+    align-items: center;
+}
+
+.docu {
+    font-family: 'Jost', serif;
+    font-size: 28px;
+    font-weight: bolder;
+    color: white;
+    margin-left: 5px;
+}
+
+.mentor {
+    font-family: 'Jost', serif;
+    font-size: 28px;
+    font-weight: bolder;
+}
+
+.ai {
+    font-family: 'Jost', serif;
+    font-size: 28px;
+    color: white;
+}
+
+.bg {
+    background-image: url("/bg.jpg");
+    height: calc(100vh - 60px);
+    width: 100vw;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-position: center center; */
+    position: relative;
+}
+
+.prof {
+    display: flex;
+    align-items: center;
+}
+
+.docupng {
+    position: absolute;
+    left: 841px;
+    top: 75px;
+    transform: translateY(120%); /* Initially out of view */
+    animation: slideUp 1.5s ease-in 0s forwards; /* Keyframe animation */
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(120%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+.Documentor {
+    margin-left: 80px;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    /* display: none; */
+}
+.size{
+    height: 110px;
+    overflow: visible;
+}
+.sizer{
+    display: flex;
+    gap: 20px;
+}
+.sizes{
+    height: 140px;
+}
+.started{
+    background-color: #01296F;
+    width: 318px;
+    height: 73px;
+    border-radius: 18px;
+    font-family: 'Jost', serif;
+    color: white;
+    font-size: 32.66px;
+    margin-top: 27px;
+    font-weight: 500;
+}
+.dsize{
+    transform: translateX(-100%);
+    animation: backup 1.5s ease-in 0s forwards;
+}
+@keyframes backup {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+.msize{
+    transform: translateX(-100%);
+    animation: backups 2s ease-in 0s forwards;
+}
+@keyframes backups {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+.started{
+    transform: translateY(100%);
+    animation: slideUp 1.5s ease-in 2s forwards;
+    cursor: pointer;
+}
+.button {
+    width: 100%;
+    padding: 12px;
+    background: rgba(0, 140, 255, 0.8);
+    color: white;
+    border: none;
+    border-radius: 18px; /* More rounded button */
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.button:hover {
+    background: rgba(0, 140, 255, 1);
+}
+
+.toggle-link {
+    color: white; /* White color for sign up/login link */
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 12px;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.toggle-link:hover {
+    opacity: 0.8;
+}
+.container {
+    width: 350px;
+    background: rgba(255, 255, 255, 0.1); /* Transparent effect */
+    backdrop-filter: blur(10px); /* Blurred background */
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: white;
+    position: relative;
+    top: 23%;
+    left: 150px;
+    display: none;
+}

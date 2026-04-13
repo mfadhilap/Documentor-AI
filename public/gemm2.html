@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Q&A with Gemini</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    
+    <style>
+      
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            /*background: linear-gradient(to right, #6a11cb, #2575fc);*/
+            background-image: url("bg.jpg");
+            background-size: cover;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            height: 100vh;
+        }
+
+        h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+      
+        .page-card {
+            border: 2px solid white;
+            margin: 10px auto;
+            padding: 10px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+            border-radius: 8px;
+        }
+
+        .page-card:hover {
+            transform: scale(1.03);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .selected {
+            background: rgba(255, 165, 0, 0.7) !important;
+        }
+
+        /* button {
+            padding: 12px 20px;
+            margin: 10px;
+            background: #ff9800;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0px 5px 15px rgba(255, 152, 0, 0.3);
+        } */
+
+        <!-- button:hover {
+            background: #e68900;
+            transform: scale(1.05);
+        } -->
+
+        #response {
+            font-size: 18px;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            min-width: 50%;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        /* --- Flex Layouts --- */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .chatcontainer{
+            height: 100vh;
+            width: 100vw;
+          /*  background-image: url("bg.jpg");
+            background-size: cover; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .chatbot{
+            width: 90.47vw;
+            height: 84.03vh;
+            background-color: white;
+            border-radius: 15px;
+            display: flex;
+            padding: 48px;
+            box-sizing: border-box;
+            align-items: center;
+            padding-bottom: 34px;
+            gap:47px;
+            background: rgb(255, 255, 255);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .robovid{
+            width: 24.03vw;
+            height: 59.13vh;
+            
+        }
+        .line{
+            height: 69.93vh;
+            width: 2px;
+            background-color: grey;
+        }
+        .chattingcont{
+            display: flex;
+            flex-direction: column;
+            height: 71.94vh;
+            position: relative;
+        }
+        .chatting{
+            width: 52.01vw;
+            height: 69.93vh;
+            display: flex;
+            flex-direction: column;
+            gap: 34px;
+            overflow-y: auto;
+        }
+        .question{
+            align-self: flex-start;
+            background-color: #0643ae;
+            border-radius: 15px;
+            width: 439px;
+            min-height: 62px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 20px;
+        }
+        .light {
+            align-self: flex-end;
+            background-color: #669af5;
+            word-wrap: break-word;
+            white-space: pre-line; 
+            /*min-height: 75px; */
+            width: 516px; 
+            display: block;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            font-size: 16px;
+            line-height: 1.5;
+            overflow-wrap: break-word;
+            text-align: left;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+        
+        #question{
+            width: 52.01vw;
+            height: 53px;
+            border-radius: 29px;
+            padding: 10px 20px;
+            padding-right: 30px;
+            box-sizing: border-box;
+            justify-self: flex-end;
+        }
+        #askFull{
+            background-color: black;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50px;
+            text-align: center;
+            position: absolute;
+            bottom: 2.5px;
+            right: 3px;
+        }
+        button {
+            background-color: #0643ae; /* Major color */
+            color: white; /* Text color */
+            border: 2px solid #669af5; /* Accent color */
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        button:hover {
+            background-color: #669af5; /* Accent color on hover */
+            color: #0643ae; /* Major color for text */
+            border-color: #0643ae;
+        }
+        
+        button:active {
+            background-color: #05368a; /* Darker shade for click effect */
+            border-color: #05368a;
+        }
+        
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 8px #669af5; /* Subtle glow effect */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📄 PDF Viewer</h2>
+        <div id="pdfContainer"></div>
+
+      
+        <div class="button-group">
+            <button id="prevBtn">⬅ Prev</button>
+            <button id="nextBtn">Next ➡</button>
+        </div>
+
+        
+        <!-- <input type="text" id="question" placeholder="Ask a question..." style="padding: 10px; width: 80%; margin: 10px;"> -->
+        
+        
+        <div class="button-group">
+            <!-- <button id="askSelected">📌 Ask with Selected Pages</button> -->
+            <!-- <button id="askFull">📜 Ask with All Pages</button> -->
+        </div>
+
+        <!-- <p id="response"></p> -->
+    </div>
+    <div class="chatcontainer">
+        <div class="chatbot">
+            <div class="robovid"><video id="robotVideo" width="100%" height="100%" autoplay muted loop>
+                <source id="videoSource" src="vid3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video></div>
+            <div class="line"></div>
+            <div class="chattingcont">
+            <div class="chatting">
+                <!-- <div class="question"></div>
+                <div class="light"></div> -->
+                <!-- <div class="question"></div>
+                <div class="light"></div> -->
+                
+            </div>
+            <input type="text" id="question" placeholder="Ask a question..." >
+            <button id="askFull">></button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const video = document.getElementById("robotVideo");
+const source = document.getElementById("videoSource");
+
+let isFirstVideo = true;
+let isSecondVideo = false; 
+let clickTimeout;
+
+video.addEventListener("click", function () {
+    clearTimeout(clickTimeout);
+    clickTimeout = setTimeout(() => {
+        if (isFirstVideo) {
+            switchVideo("vid2.mp4"); 
+            isFirstVideo = false;
+            isSecondVideo = true;
+        }
+    }, 250); 
+});
+
+video.addEventListener("dblclick", function () {
+    clearTimeout(clickTimeout); 
+    switchVideo("flip4.mp4"); 
+    isFirstVideo = false;
+    isSecondVideo = false;
+});
+
+video.addEventListener("ended", function () {
+    if (!isFirstVideo) {
+        switchVideo("vid3.mp4"); 
+        isFirstVideo = true;
+        isSecondVideo = false;
+    }
+});
+
+function switchVideo(videoFile) {
+    source.src = videoFile;
+    video.loop = videoFile === "vid3.mp4";
+    video.load();
+    video.play();
+}
+
+        document.addEventListener("DOMContentLoaded", function () {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
+            const pdfContainer = document.getElementById("pdfContainer");
+            let pdfDoc = null;
+            let currentPage = 1;
+            let pdfPages = []; 
+            let selectedPages = new Set(); 
+            const scale = 1; 
+        
+           
+            const pdfUrlParams = new URLSearchParams(window.location.search);
+            const pdfFile = pdfUrlParams.get("pdf");
+        
+            if (pdfFile) {
+                loadPDF(decodeURIComponent(pdfFile));
+            } else {
+                console.error("No PDF file specified in URL.");
+            }
+        
+            function loadPDF(url) {
+                pdfjsLib.getDocument(url).promise.then(pdf => {
+                    pdfDoc = pdf;
+                    
+                    
+                    let textPromises = [];
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        textPromises.push(extractTextFromPage(pdf, i));
+                    }
+        
+                    Promise.all(textPromises).then(texts => {
+                        pdfPages = texts;
+                        renderPage(currentPage);
+                    });
+                }).catch(error => console.error("Error loading PDF:", error));
+            }
+        
+            function extractTextFromPage(pdf, pageNum) {
+                return pdf.getPage(pageNum).then(page => {
+                    return page.getTextContent().then(textContent => {
+                        return textContent.items.map(item => item.str).join(" ");
+                    });
+                });
+            }
+        
+            function renderPage(pageNum) {
+                pdfDoc.getPage(pageNum).then(page => {
+                    let canvas = document.createElement("canvas");
+                    let ctx = canvas.getContext("2d");
+                    let viewport = page.getViewport({ scale });
+        
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    canvas.classList.add("page-card");
+        
+                    let renderTask = page.render({ canvasContext: ctx, viewport });
+        
+                    renderTask.promise.then(() => {
+                        pdfContainer.innerHTML = "";
+                        pdfContainer.appendChild(canvas);
+                    });
+        
+                    
+                    canvas.addEventListener("click", function () {
+                        togglePageSelection(pageNum, canvas);
+                    });
+        
+                    
+                    if (selectedPages.has(pageNum)) {
+                        canvas.style.border = "4px solid orange";
+                    }
+                }).catch(error => console.error("Error rendering page:", error));
+            }
+        
+            function prevPage() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderPage(currentPage);
+                }
+            }
+        
+            function nextPage() {
+                if (currentPage < pdfDoc.numPages) {
+                    currentPage++;
+                    renderPage(currentPage);
+                }
+            }
+        
+            function togglePageSelection(pageNum, pageDiv) {
+                if (selectedPages.has(pageNum)) {
+                    selectedPages.delete(pageNum);
+                    pageDiv.style.border = "2px solid white";
+                } else {
+                    selectedPages.add(pageNum);
+                    pageDiv.style.border = "4px solid orange";
+                }
+            }
+        
+            function getSelectedText() {
+                return Array.from(selectedPages).map(pageNum => pdfPages[pageNum - 1]).join("\n");
+            }
+            const API_KEY = "AIzaSyDbtH4s2INQ7zg4yblJkCnLqf8vr4_5kEw";  
+const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY;
+
+/* async function askGemini(isFullFile) {
+    const cont= document.querySelector(".chatting")
+    const userQuestion = document.getElementById("question").value.trim();
+    const quest=document.createElement("div");
+    quest.classList.add("question");
+    if (!userQuestion) {
+        alert("Please enter a question.");
+        return;
+    }
+    quest.innerText=userQuestion;
+    cont.appendChild(quest);
+    const selectedText = isFullFile ? pdfPages.join("\n") : getSelectedText();
+    if (!selectedText) {
+        alert("No pages selected!");
+        return;
+    }
+
+    const requestBody = {
+        contents: [{ parts: [{ text: selectedText + "\n\n" + userQuestion + "Answer only if its available in the given text, else say cant give answer" + "\n\nAlways structure the answer in bullet points. Use '-' or '•' for each point."}] }]
+    };
+
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestBody)
+        });
+
+        const data = await response.json();
+        console.log(data);
+        const resp = document.createElement("div");
+        resp.classList.add("light")
+        if (data && data.candidates) { 
+            /*document.querySelector(".light").innerText = data.candidates[0].content.parts[0].text; */
+       /*     resp.innerText= data.candidates[0].content.parts[0].text;
+            cont.appendChild(resp);
+        } else {
+            /*document.querySelector(".light").innerText = "No valid response from AI.";*/
+           /* resp.innerText="No valid response from AI.";
+            cont.appendChild(resp);
+        }
+       // responseElement.style.height = "auto";
+    } catch (error) {
+        console.error("Error fetching response:", error);
+        document.getElementById("response").innerText = "Error fetching response.";
+       // resp.innerText="Error fetching response.";
+        //cont.appendChild(resp);
+    }
+} */
+
+           /* function askGemini(isFullFile) {
+                const userQuestion = document.getElementById("question").value.trim();
+                if (!userQuestion) {
+                    alert("Please enter a question.");
+                    return;
+                }
+        
+                const selectedText = isFullFile ? pdfPages.join("\n") : getSelectedText();
+                if (!selectedText) {
+                    alert("No pages selected!");
+                    return;
+                }
+
+                
+                fetch(apiUrl, {  AI request logic  })
+                .then(response => response.json())
+                .then(data => {  Display AI response  })
+                .catch(error => console.error("Error fetching response:", error));
+            } */
+            async function askGemini(isFullFile) {
+                const cont = document.querySelector(".chatting");
+                const userQuestion = document.getElementById("question").value.trim();
+                
+                const quest = document.createElement("div");
+                quest.classList.add("question");
+                
+                if (!userQuestion) {
+                    alert("Please enter a question.");
+                    return;
+                }
+            
+                quest.innerText = userQuestion;
+                cont.appendChild(quest);
+            
+                const selectedText = isFullFile ? pdfPages.join("\n") : getSelectedText();
+                
+                if (!selectedText) {
+                    alert("No pages selected!");
+                    return;
+                }
+            
+                const requestBody = {
+                    contents: [{ parts: [{ text: selectedText + "\n\n" + userQuestion + 
+                        "\n\nAnswer in bullet points only. If the answer is not available, say 'Can't provide an answer'." +
+                        "Always answer from the text. General Answer Format for 7 marks:" +
+                        "Definition/Introduction (1-2 sentences), Key Points with brief explanation (at least 7 key points, preferably in bullet points)," }] }]
+                };
+            
+                try {
+                    const response = await fetch(API_URL, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(requestBody)
+                    });
+            
+                    const data = await response.json();
+                    console.log("Raw AI Response:", data);
+            
+                    const resp = document.createElement("div");
+                    resp.classList.add("light");
+            
+                    if (data && data.candidates) {
+                        let aiResponse = data.candidates[0].content.parts[0].text;
+                        console.log("Formatted AI Response Before Processing:", aiResponse);
+                        resp.innerHTML = formatResponse(aiResponse);
+                        cont.appendChild(resp);
+                    } else {
+                        resp.innerText = "No valid response from AI.";
+                        cont.appendChild(resp);
+                    }
+                } catch (error) {
+                    console.error("Error fetching response:", error);
+                    document.getElementById("response").innerText = "Error fetching response.";
+                }
+            }
+            
+            function formatResponse(text) {
+                console.log("Before Formatting:", text);
+            
+                // Replace **Bold Text** with a span that makes it black and bold
+                text = text.replace(/\*\*(.*?)\*\*/g, '<span style="color: black; font-weight: bold;">$1</span>');
+            
+                // Convert bullet points (- or •) into an unordered list
+                text = text.replace(/(?:^|\n)([-•])\s*(.*?)(?=\n|$)/g, '<li>$2</li>');
+            
+                // Wrap bullet points in <ul> if they exist
+                if (text.includes("<li>")) {
+                    text = text.replace(/(<li>.*?<\/li>)/gs, "<ul>$1</ul>");
+                }
+            
+                // Preserve line breaks
+                text = text.replace(/\n/g, "<br>");
+            
+                console.log("After Formatting:", text);
+                return text;
+            }
+            
+            
+        
+            document.getElementById("nextBtn").addEventListener("click", nextPage);
+            document.getElementById("prevBtn").addEventListener("click", prevPage);
+            //document.getElementById("askSelected").addEventListener("click", () => askGemini(false)); 
+            document.getElementById("askFull").addEventListener("click", () => askGemini(true));
+        });
+    </script>
+</body>
+</html>
